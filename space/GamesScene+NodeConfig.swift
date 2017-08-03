@@ -22,7 +22,6 @@ enum RowType: Int{
 extension GameScene {
     
     func setupWorldPhysics() {
-        
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         self.physicsWorld.contactDelegate = self
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
@@ -44,23 +43,28 @@ extension GameScene {
     
     func createPlayer(){
         player = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "Rocket")))
-        player.position = CGPoint(x: screenWidth / 2, y: 300)
+        player.position = CGPoint(x: screenWidth / 2, y: screenHeight / 3)
         player.name = "player"
-        player.size.height = 155
-        player.size.width = 70
+        player.size = CGSize(width: screenWidth / 5.35, height: screenHeight / 4.3)
         player.zPosition = 1
         player.speed = 10
         player.physicsBody?.isDynamic = true
-        player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: player.size.width / 1.5, height: 10 + player.size.height / 1.8 ))
+        player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: screenWidth / 8, height: screenHeight / 7.75))
         player.physicsBody?.categoryBitMask = bitMask.player
         player.physicsBody?.collisionBitMask = bitMask.player
         player.physicsBody?.contactTestBitMask = bitMask.wall
         
         playerEmitter = SKEmitterNode(fileNamed: "spark.sks")!
-        playerEmitter.position = CGPoint(x: player.position.x - 185, y: player.position.y - 320)
+        playerEmitter.position = CGPoint(x: screenWidth / 150, y:screenHeight / -27)
         playerEmitter.zPosition = 1
         playerEmitter.isHidden = true
         player.addChild(playerEmitter)
+        
+        boomEmitter = SKEmitterNode(fileNamed: "MyParticle.sks")!
+        boomEmitter.position = CGPoint(x: screenWidth / 6, y:screenHeight / 2)
+        boomEmitter.zPosition = 2
+        boomEmitter.isHidden = true
+//        player.addChild(boomEmitter)
         
         self.addChild(player)
     }
@@ -74,12 +78,11 @@ extension GameScene {
         
         let   wall = SKSpriteNode(texture: texture)
         wall.name = "wall"
+        wall.position = CGPoint(x: 0, y: screenHeight / 0.78)
         wall.zPosition = 1
-        wall.size.width = 170
-        wall.size.height = 65
+        wall.size = CGSize(width: screenWidth / 2.2, height: screenHeight / 10.2)
         wall.physicsBody?.isDynamic = false
-        wall.position = CGPoint(x: 0, y: screenHeight + wall.size.height + 100)
-        wall.physicsBody = SKPhysicsBody(circleOfRadius: 20)
+        wall.physicsBody = SKPhysicsBody(circleOfRadius: screenHeight / 33.35)
         wall.physicsBody?.categoryBitMask = bitMask.wall
         wall.physicsBody?.collisionBitMask = 0
         
@@ -89,15 +92,16 @@ extension GameScene {
         return wall
     }
     
-    
     func addMovement(wall :SKSpriteNode){
-        var actionArray = [SKAction]()
-        actionArray.append(SKAction.move(to: CGPoint(x: wall.position.x, y: -wall.size.height), duration: TimeInterval(i)))
-        actionArray.append(SKAction.removeFromParent())
-        wall.run(SKAction.sequence(actionArray))
-        if i <= 0 {
-            state = .end
+        if state == .play{
+            var actionArray = [SKAction]()
+            actionArray.append(SKAction.move(to: CGPoint(x: wall.position.x, y: -wall.size.height), duration: TimeInterval(i)))
+            actionArray.append(SKAction.removeFromParent())
+            wall.run(SKAction.sequence(actionArray))
         }
+            if i <= 0 {
+                state = .end
+            }
     }
     
     func addRow(type: RowType){
@@ -162,9 +166,10 @@ extension GameScene {
         addMovement(wall: wall4)
         addMovement(wall: wall5)
     }
+    
     func createHUD(){
-        scoreLabel = SKLabelNode(fontNamed: "Comic Sans MS")
-        scoreLabel.fontSize = 40
+        scoreLabel = SKLabelNode(fontNamed: "Ubuntu")
+        scoreLabel.fontSize = screenWidth / 9.375
         scoreLabel.fontColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         scoreLabel.position = CGPoint(x: screenWidth / 2, y: screenHeight / 1.1)
         scoreLabel.name = "scoreLabel"
@@ -174,11 +179,10 @@ extension GameScene {
         addChild(scoreLabel)
         
         pauseButton = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "pause")))
-        pauseButton.size.width = 40
-        pauseButton.size.height = 40
-        pauseButton.name = "pauseButton"
-        pauseButton.zPosition = 2
         pauseButton.position = CGPoint(x: screenWidth / 1.1, y: screenHeight / 1.1 + 20)
+        pauseButton.zPosition = 2
+        pauseButton.size = CGSize(width: screenWidth / 9.37, height: screenHeight / 16.67)
+        pauseButton.name = "pauseButton"
         pauseButton.isHidden = true
         addChild(pauseButton)
     }
@@ -198,8 +202,7 @@ extension GameScene {
         let toLeft = SKAction.moveBy(x: -screenWidth, y: 0, duration: 2.0)
         let repeatForever = SKAction.repeatForever(SKAction.sequence([toRight,toLeft]))
         swipeSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "finger-swipe")))
-        swipeSprite.size.height = 75
-        swipeSprite.size.width = 75
+        swipeSprite.size = CGSize(width: screenWidth / 5, height: screenHeight / 8.9)
         swipeSprite.position = CGPoint(x: 0, y: 70)
         swipeSprite.isHidden = false
         swipeSprite.run(repeatForever)
@@ -210,5 +213,4 @@ extension GameScene {
         swipeSprite.removeAllActions()
         swipeSprite.removeFromParent()
     }
-    
 }

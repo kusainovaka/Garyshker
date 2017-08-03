@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import EasyPeasy
 
 class TotalScoreScene: SKScene, UITableViewDelegate, UITableViewDataSource {
     
@@ -16,10 +17,8 @@ class TotalScoreScene: SKScene, UITableViewDelegate, UITableViewDataSource {
     var scores = [Int]()
     var names = ["player"]
     
-    
-     var scoreTableView: UITableView = {
+    private lazy var scoreTableView: UITableView = {
         let tableView = UITableView()
-        tableView.frame = CGRect(x: 80, y: 80, width: screenWidth / 2, height: screenHeight / 1.5)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.backgroundColor = .clear
         return tableView
@@ -33,22 +32,22 @@ class TotalScoreScene: SKScene, UITableViewDelegate, UITableViewDataSource {
         getScores()
         scoreTableView.delegate = self
         scoreTableView.dataSource = self
-        
     }
     
     func backToMenu(){
-        backButton = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "homee")))
-        backButton.size = CGSize(width: 100, height: 100)
-        backButton.position = CGPoint(x: self.size.width / 6, y: self.size.height / 1.1)
+        backButton = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "back")))
+        backButton.setScale(0.5)
+        backButton.position = CGPoint(x: screenWidth / 7, y: screenHeight / 1.08)
+        backButton.size = CGSize(width: screenWidth / 5.85, height: screenHeight / 10.4)
         backButton.zPosition = 1
         backButton.name = "back"
         addChild(backButton)
         
-        playerLabel = SKLabelNode(fontNamed: "Comic Sans MS")
-        playerLabel.position = CGPoint(x: screenWidth / 2, y: screenHeight / 1.15)
-        playerLabel.text = "players"
-        playerLabel.fontSize = 40
-        playerLabel.fontColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
+        playerLabel = SKLabelNode(fontNamed: "Ubuntu")
+        playerLabel.position = CGPoint(x: screenWidth / 2, y: screenHeight / 1.1)
+        playerLabel.text = "SCORES"
+        playerLabel.fontSize = screenWidth / 9.4
+        playerLabel.fontColor = UIColor(red: 254/255, green: 245/255, blue: 227/255, alpha: 100)
         addChild(playerLabel)
     }
     
@@ -57,6 +56,7 @@ class TotalScoreScene: SKScene, UITableViewDelegate, UITableViewDataSource {
         if let scoresFromDefaults = defaults.array(forKey: "scores") {
             scores = scoresFromDefaults as! [Int]
             scoreTableView.reloadData()
+            tableViewLayouts()
         }
     }
     
@@ -68,16 +68,12 @@ class TotalScoreScene: SKScene, UITableViewDelegate, UITableViewDataSource {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
         cell.backgroundColor = .clear
         cell.selectionStyle  = .none
-        
-        let mylabel = UILabel(frame: CGRect(x: 100, y: -16, width: 100, height: 100))
-        mylabel.text = String(scores[indexPath.row])
-        mylabel.font = UIFont(name: "Comic Sans MS", size: 30)
-        mylabel.textColor = .white
-//        let mylabel2 = UILabel(frame: CGRect(x: 120, y: -20, width: 100, height: 100))
-//        mylabel2.text = String(scores[indexPath.row])
-        
-        cell.addSubview(mylabel)
-//        cell.addSubview(mylabel2)
+        scores.sort(){$0 > $1}
+        cell.textLabel?.text = String(scores[indexPath.row])
+        cell.textLabel?.font = UIFont(name: "Ubuntu", size: 25)
+        cell.textLabel?.textColor = UIColor(red: 254/255, green: 245/255, blue: 227/255, alpha: 100)
+        cell.textLabel?.textAlignment = .center
+
         return cell
     }
     
@@ -91,5 +87,14 @@ class TotalScoreScene: SKScene, UITableViewDelegate, UITableViewDataSource {
             let menuScene = MenuScene(size: self.size)
             self.view?.presentScene(menuScene)
         }
+    }
+    private func tableViewLayouts(){
+    scoreTableView <- [
+        Right(100),
+        Left(100),
+        Top(100),
+        Bottom(100)
+        ]
+    
     }
 }

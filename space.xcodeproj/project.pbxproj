@@ -10,19 +10,19 @@
 		270E2D44A86116B6FC623245 /* Pods_space.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 146AF770A93A101D2C4E0787 /* Pods_space.framework */; };
 		8E2ADFB01F036F8500DDFB2A /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2ADFAF1F036F8500DDFB2A /* GameState.swift */; };
 		8E2ADFB21F03717900DDFB2A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2ADFB11F03717900DDFB2A /* Constants.swift */; };
-		8E31D6F71F06777C008853EA /* ScoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E31D6F61F06777C008853EA /* ScoreScene.swift */; };
-		8E3857861F0B3A6700677660 /* SKTAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3857851F0B3A6700677660 /* SKTAudio.swift */; };
+		8E3598B61F2B3320004180A7 /* DJVI-Back On Track.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8E3598B51F2B3320004180A7 /* DJVI-Back On Track.mp3 */; };
+		8E3598BC1F2B4A20004180A7 /* shine.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8E3598BB1F2B4A20004180A7 /* shine.sks */; };
+		8E3598BE1F2B4CC8004180A7 /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8E3598BD1F2B4CC8004180A7 /* spark.sks */; };
 		8E38578A1F0B800500677660 /* TotalScoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3857891F0B800500677660 /* TotalScoreScene.swift */; };
 		8E3F49E11F009BDA00812B02 /* GamesScene+NodeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F49E01F009BDA00812B02 /* GamesScene+NodeConfig.swift */; };
-		8E3F49E91F00AD9000812B02 /* spark.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8E3F49E81F00AD9000812B02 /* spark.sks */; };
-		8E439F5E1F0C89350019719E /* menuSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8E439F5D1F0C89350019719E /* menuSound.mp3 */; };
-		8E439F621F0CD4290019719E /* Comic Sans MS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E439F611F0CD40B0019719E /* Comic Sans MS.ttf */; };
 		8E9845A91F00384600BFB2AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9845A81F00384600BFB2AD /* AppDelegate.swift */; };
 		8E9845AF1F00384600BFB2AD /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9845AE1F00384600BFB2AD /* GameScene.swift */; };
 		8E9845B11F00384600BFB2AD /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9845B01F00384600BFB2AD /* GameViewController.swift */; };
 		8E9845B61F00384600BFB2AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E9845B51F00384600BFB2AD /* Assets.xcassets */; };
 		8E9845B91F00384600BFB2AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E9845B71F00384600BFB2AD /* LaunchScreen.storyboard */; };
 		8E9845C51F003ACA00BFB2AD /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9845C41F003ACA00BFB2AD /* MenuScene.swift */; };
+		8EFCA4CD1F2ED38700685870 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8EFCA4CC1F2ED38700685870 /* MyParticle.sks */; };
+		8EFCA4D01F2EF90300685870 /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EFCA4CF1F2EF90300685870 /* Ubuntu-B.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,13 +31,11 @@
 		707514C8FC9437614A153877 /* Pods-space.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-space.release.xcconfig"; path = "Pods/Target Support Files/Pods-space/Pods-space.release.xcconfig"; sourceTree = "<group>"; };
 		8E2ADFAF1F036F8500DDFB2A /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		8E2ADFB11F03717900DDFB2A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		8E31D6F61F06777C008853EA /* ScoreScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreScene.swift; sourceTree = "<group>"; };
-		8E3857851F0B3A6700677660 /* SKTAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTAudio.swift; sourceTree = "<group>"; };
+		8E3598B51F2B3320004180A7 /* DJVI-Back On Track.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "DJVI-Back On Track.mp3"; sourceTree = "<group>"; };
+		8E3598BB1F2B4A20004180A7 /* shine.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = shine.sks; sourceTree = "<group>"; };
+		8E3598BD1F2B4CC8004180A7 /* spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = spark.sks; sourceTree = "<group>"; };
 		8E3857891F0B800500677660 /* TotalScoreScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalScoreScene.swift; sourceTree = "<group>"; };
 		8E3F49E01F009BDA00812B02 /* GamesScene+NodeConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GamesScene+NodeConfig.swift"; sourceTree = "<group>"; };
-		8E3F49E81F00AD9000812B02 /* spark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = spark.sks; sourceTree = "<group>"; };
-		8E439F5D1F0C89350019719E /* menuSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menuSound.mp3; sourceTree = "<group>"; };
-		8E439F611F0CD40B0019719E /* Comic Sans MS.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Comic Sans MS.ttf"; sourceTree = "<group>"; };
 		8E9845A51F00384600BFB2AD /* space.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = space.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E9845A81F00384600BFB2AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E9845AE1F00384600BFB2AD /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -46,6 +44,8 @@
 		8E9845B81F00384600BFB2AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E9845BA1F00384600BFB2AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E9845C41F003ACA00BFB2AD /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		8EFCA4CC1F2ED38700685870 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyParticle.sks; sourceTree = "<group>"; };
+		8EFCA4CF1F2EF90300685870 /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				8E9845A81F00384600BFB2AD /* AppDelegate.swift */,
-				8E439F611F0CD40B0019719E /* Comic Sans MS.ttf */,
+				8EFCA4CF1F2EF90300685870 /* Ubuntu-B.ttf */,
 				8E9845B71F00384600BFB2AD /* LaunchScreen.storyboard */,
 				8E9845BA1F00384600BFB2AD /* Info.plist */,
 			);
@@ -92,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				8E2ADFAF1F036F8500DDFB2A /* GameState.swift */,
-				8E3857851F0B3A6700677660 /* SKTAudio.swift */,
 				8E2ADFB11F03717900DDFB2A /* Constants.swift */,
 			);
 			name = Helpers;
@@ -102,8 +101,10 @@
 			isa = PBXGroup;
 			children = (
 				8E9845B51F00384600BFB2AD /* Assets.xcassets */,
-				8E439F5D1F0C89350019719E /* menuSound.mp3 */,
-				8E3F49E81F00AD9000812B02 /* spark.sks */,
+				8E3598B51F2B3320004180A7 /* DJVI-Back On Track.mp3 */,
+				8E3598BD1F2B4CC8004180A7 /* spark.sks */,
+				8EFCA4CC1F2ED38700685870 /* MyParticle.sks */,
+				8E3598BB1F2B4A20004180A7 /* shine.sks */,
 			);
 			name = Media;
 			sourceTree = "<group>";
@@ -133,7 +134,6 @@
 				8E9845C41F003ACA00BFB2AD /* MenuScene.swift */,
 				8E9845AE1F00384600BFB2AD /* GameScene.swift */,
 				8E3F49E01F009BDA00812B02 /* GamesScene+NodeConfig.swift */,
-				8E31D6F61F06777C008853EA /* ScoreScene.swift */,
 				8E3857891F0B800500677660 /* TotalScoreScene.swift */,
 				8E2ADFAE1F0363D500DDFB2A /* Media */,
 				8E2ADFAD1F03622600DDFB2A /* Helpers */,
@@ -177,7 +177,7 @@
 				TargetAttributes = {
 					8E9845A41F00384600BFB2AD = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = EGMW296ABA;
+						DevelopmentTeam = AB65P3C5XF;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -205,11 +205,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E439F621F0CD4290019719E /* Comic Sans MS.ttf in Resources */,
-				8E439F5E1F0C89350019719E /* menuSound.mp3 in Resources */,
+				8E3598BE1F2B4CC8004180A7 /* spark.sks in Resources */,
+				8E3598BC1F2B4A20004180A7 /* shine.sks in Resources */,
+				8E3598B61F2B3320004180A7 /* DJVI-Back On Track.mp3 in Resources */,
+				8EFCA4D01F2EF90300685870 /* Ubuntu-B.ttf in Resources */,
+				8EFCA4CD1F2ED38700685870 /* MyParticle.sks in Resources */,
 				8E9845B61F00384600BFB2AD /* Assets.xcassets in Resources */,
 				8E9845B91F00384600BFB2AD /* LaunchScreen.storyboard in Resources */,
-				8E3F49E91F00AD9000812B02 /* spark.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,10 +274,8 @@
 				8E9845AF1F00384600BFB2AD /* GameScene.swift in Sources */,
 				8E9845C51F003ACA00BFB2AD /* MenuScene.swift in Sources */,
 				8E38578A1F0B800500677660 /* TotalScoreScene.swift in Sources */,
-				8E3857861F0B3A6700677660 /* SKTAudio.swift in Sources */,
 				8E3F49E11F009BDA00812B02 /* GamesScene+NodeConfig.swift in Sources */,
 				8E9845B11F00384600BFB2AD /* GameViewController.swift in Sources */,
-				8E31D6F71F06777C008853EA /* ScoreScene.swift in Sources */,
 				8E9845A91F00384600BFB2AD /* AppDelegate.swift in Sources */,
 				8E2ADFB21F03717900DDFB2A /* Constants.swift in Sources */,
 			);
@@ -395,12 +395,17 @@
 			baseConfigurationReference = 4F2C9034B00B13D22B7C33F8 /* Pods-space.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = EGMW296ABA;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = AB65P3C5XF;
 				INFOPLIST_FILE = space/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sdu.edu.kz.kamila.space;
+				PRODUCT_BUNDLE_IDENTIFIER = kamila.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -409,12 +414,17 @@
 			baseConfigurationReference = 707514C8FC9437614A153877 /* Pods-space.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = EGMW296ABA;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = AB65P3C5XF;
 				INFOPLIST_FILE = space/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sdu.edu.kz.kamila.space;
+				PRODUCT_BUNDLE_IDENTIFIER = kamila.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

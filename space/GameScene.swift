@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 import EasyPeasy
-import CoreMotion
+
 
 class GameScene: SKScene,SKPhysicsContactDelegate {
     
@@ -22,6 +22,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     
     var background: SKSpriteNode!
     var player: SKSpriteNode!
+    var boomEmitter:SKEmitterNode!
     var pauseButton: SKSpriteNode!
     var swipeSprite: SKSpriteNode!
     var scoreLabel  = SKLabelNode()
@@ -32,17 +33,12 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     var entryX: CGFloat = 0
     var lock = false
     var playerEmitter = SKEmitterNode()
-    var i: Float = 4
-    let manager = CMMotionManager()
-        let pauseView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
+    var i: Float = 5
+    var backgroundMusic = SKAudioNode()
+    var crashMusic = SKAudioNode()
     
-    //View
-//     private lazy var pauseView: UIView = {
-//        let gamePauseView = UIView()
-//        gamePauseView.backgroundColor = UIColor.red
-//        return gamePauseView
-//        
-//    }()
+    let pauseView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
+   
     private lazy var gameOverView: UIView = {
         let goview = UIView()
         goview.backgroundColor = UIColor(red: 69/255, green: 50/255, blue: 88/255, alpha: 100)
@@ -51,52 +47,61 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         return goview
     }()
     
-    private lazy var menuButton: UIButton = {
-        let mButton = UIButton()
-        mButton.setImage(#imageLiteral(resourceName: "homee"), for: .normal)
-        mButton.addTarget(self, action: #selector(backToMenu), for: .touchUpInside)
-        return mButton
-    }()
-    private lazy var restartButton: UIButton = {
-        let gameRestart = UIButton()
-        gameRestart.setImage(#imageLiteral(resourceName: "loading5"), for: .normal)
-        gameRestart.addTarget(self, action: #selector(restartGame), for: .touchUpInside)
-        return gameRestart
-    }()
-    
     private lazy var gameOverLabel: UILabel = {
         let gameOver = UILabel()
         gameOver.text = "GAME OVER"
         gameOver.textColor = .white
-        gameOver.font = UIFont(name: "Comic Sans MS", size: 40)
-        
+        gameOver.font = UIFont(name: "Ubuntu", size: screenWidth / 9.375 )
         return gameOver
     }()
     
     private lazy var finishScoreLabel: UILabel = {
         let finishScore = UILabel()
-        finishScore.font = UIFont(name: "Comic Sans MS", size: 30)
+        finishScore.font = UIFont(name: "Ubuntu", size: screenWidth / 12.5)
         finishScore.textColor = UIColor(red: 85/255, green: 190/255, blue: 240/255, alpha: 100)
         return finishScore
     }()
+    
     private lazy var highScoreLabel: UILabel = {
-        let highScore = UILabel(frame: CGRect(x: self.size.width / 7 , y: self.size.height / 3.8, width: 200, height: 50))
-        
-        highScore.font = UIFont(name: "Comic Sans MS", size: 30)
+        let highScore = UILabel()
+        highScore.font = UIFont(name: "Ubuntu", size: screenWidth / 12.5)
         highScore.textAlignment = .center
         highScore.textColor = UIColor(red: 85/255, green: 190/255, blue: 240/255, alpha: 100)
         return highScore
     }()
     
+    private lazy var menuButton: UIButton = {
+        let mButton = UIButton()
+        mButton.setImage(#imageLiteral(resourceName: "earth"), for: .normal)
+        mButton.addTarget(self, action: #selector(backToMenu), for: .touchUpInside)
+        return mButton
+    }()
+    private lazy var restartButton: UIButton = {
+        let gameRestart = UIButton()
+        gameRestart.setImage(#imageLiteral(resourceName: "redo"), for: .normal)
+        gameRestart.addTarget(self, action: #selector(restartGame), for: .touchUpInside)
+        return gameRestart
+    }()
+    
+    private lazy var restartLabel: UILabel = {
+        let labelRestart = UILabel()
+        labelRestart.text = "RESTART"
+        labelRestart.font = UIFont(name: "Ubuntu", size: screenWidth / 26.7 )
+        labelRestart.textColor = .white
+        return labelRestart
+        
+    }()
+    private lazy var menuLabel: UILabel = {
+        let labelMenu = UILabel()
+        labelMenu.text = "MENU"
+        labelMenu.font = UIFont(name: "Ubuntu", size: screenWidth / 26.7 )
+        labelMenu.textColor = .white
+        return labelMenu
+        
+    }()
+
     // MARK: - Did move to skVIew
     override func didMove(to view: SKView) {
-        
-        //        manager.startAccelerometerUpdates()
-        //        manager.accelerometerUpdateInterval = 0.1
-        //        manager.startAccelerometerUpdates(to: OperationQueue.main){
-        //            (data, error) in
-        //            self.physicsWorld.gravity = CGVector(dx: CGFloat((data?.acceleration.x)! * 5), dy: 0)
-        //        }
         self.backgroundColor = UIColor(red: 53/255, green: 43/255, blue: 77/255, alpha: 100)
         setupWorldPhysics()
         moveBackground()
@@ -104,8 +109,14 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         createHUD()
         configurePauseView()
         
+        crashMusic = SKAudioNode(fileNamed: "crash.mp3")
+        crashMusic.run(SKAction.pause())
+        addChild(crashMusic)
         
-        
+        if Model.sharedInstance.sound == true{
+            backgroundMusic = SKAudioNode(fileNamed: "DJVI-Back On Track.mp3")
+            addChild(backgroundMusic)
+        }
         state = .tutorial
     }
     
@@ -113,8 +124,9 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         var timeSinceLastUpdate = currentTime - updateTime
         updateTime = currentTime
-        i -= 0.005
-        
+        if state == .play{
+        i -= 0.003
+        }
         if timeSinceLastUpdate > 2.0{
             timeSinceLastUpdate = 1/60
             updateTime = currentTime
@@ -124,7 +136,8 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        if contact.bodyA.node?.name == "player" { state = .end }
+       boomEmitter.isHidden = false
+        if contact.bodyA.node?.name == "player"{state = .end}
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -136,7 +149,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
         let node = self.atPoint(location)
-        
         if node.name == "pauseButton" {
             state = .pause
         }
@@ -163,53 +175,64 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     
     // MARK: - States
     func stateChanged(to state: GameState) {
-        
         switch state {
         case .tutorial:
             addTutorial()
         case .play:
+            if Model.sharedInstance.sound == true {
+                backgroundMusic.run(SKAction.play())
+            }
             removeTutorial()
             showHUD()
             playerEmitter.isHidden = false
         case .pause:
             pauseGame()
+            backgroundMusic.run(SKAction.pause())
         case .end:
             stopGame()
         }
     }
+    
     func configurePauseView() {
-        
-       pauseView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        let pauseLabel = UILabel(frame: CGRect(x: screenWidth / 3.5, y: screenHeight / 8, width: 200, height: 150))
+        pauseView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        let pauseLabel = UILabel(frame: CGRect(x: screenWidth / 3, y: screenHeight / 8, width: screenWidth / 1.87 , height: screenHeight / 3.32))
         pauseLabel.text = "PAUSE"
-        pauseLabel.font = UIFont(name: "Comic Sans MS", size: 50)
+        pauseLabel.font = UIFont(name: "Ubuntu", size: screenWidth / 9.375 )
         pauseLabel.textColor = .white
         
-        let playButton = UIButton(frame: CGRect(x: screenWidth / 4, y: screenHeight / 3, width: 200, height: 200))
-        playButton.setImage(#imageLiteral(resourceName: "playbutton"), for: .normal)
+        let playButton = UIButton(frame: CGRect(x: screenWidth / 2.25, y: screenHeight / 2.5, width: screenHeight / 16, height: screenHeight / 16))
+        playButton.setImage(#imageLiteral(resourceName: "music-player-play"), for: .normal)
         playButton.addTarget(self, action: #selector(backToGame), for: .touchUpInside)
         
-        let restartButton = UIButton(frame: CGRect(x: screenWidth / 1.8 , y: screenHeight / 1.5, width: 120, height: 120))
-        restartButton.setImage(#imageLiteral(resourceName: "loading5"), for: .normal)
+        let restartButton = UIButton(frame: CGRect(x: screenWidth / 1.4 , y: screenHeight / 1.5, width: screenHeight / 18 , height: screenHeight / 18))
+        restartButton.setImage(#imageLiteral(resourceName: "redo"), for: .normal)
         restartButton.addTarget(self, action: #selector(restartGame), for: .touchUpInside)
+        let restartLabel = UILabel(frame: CGRect(x: screenWidth / 1.47, y: screenHeight / 1.38, width: screenHeight / 10, height: screenHeight / 10))
+        restartLabel.text = "RESTART"
+        restartLabel.font = UIFont(name: "Ubuntu", size: screenWidth / 26.7 )
+        restartLabel.textColor = .white
         
-        let menuButton = UIButton(frame: CGRect(x: screenWidth / 8, y: screenHeight / 1.5, width: 120, height: 120))
-        menuButton.setImage(#imageLiteral(resourceName: "homee"), for: .normal)
+        let menuButton = UIButton(frame: CGRect(x: screenWidth / 4.4, y: screenHeight / 1.5, width: screenHeight / 16, height: screenHeight / 16))
+        menuButton.setImage(#imageLiteral(resourceName: "earth"), for: .normal)
         menuButton.addTarget(self, action: #selector(backToMenu), for: .touchUpInside)
+        let menuLabel = UILabel(frame: CGRect(x: screenWidth / 4.45, y: screenHeight / 1.38, width: screenHeight / 10, height: screenHeight / 10))
+        menuLabel.text = "MENU"
+        menuLabel.font = UIFont(name: "Ubuntu", size: screenWidth / 26.7 )
+        menuLabel.textColor = .white
         
         pauseView.addSubview(restartButton)
+        pauseView.addSubview(restartLabel)
         pauseView.addSubview(menuButton)
+        pauseView.addSubview(menuLabel)
         pauseView.addSubview(playButton)
         pauseView.addSubview(pauseLabel)
-//        pauseViewLayouts()
     }
-
     
     func gameOverPresent(){
-        view?.addSubview(gameOverView)
+        view?.addSubview(self.gameOverView)
         scoreLabel.removeFromParent()
-        finishScoreLabel.text = "score: \(score)"
-        highScoreLabel.text = "best score: \(Model.sharedInstance.highscore)"
+        
+        finishScoreLabel.text = "SCORE: \(score)"
         
         let defaults = UserDefaults.standard
         if var scores = defaults.array(forKey: "scores") {
@@ -220,19 +243,24 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             defaults.set(scores, forKey: "scores")
         }
         
-        Model.sharedInstance.highscore = defaults.integer(forKey: "Saved")
-        if score > Model.sharedInstance.highscore{
-            Model.sharedInstance.highscore = score
-            defaults.set(Model.sharedInstance.highscore, forKey: "Saved")
+        var highScoreNumber = defaults.integer(forKey: "Saved")
+        
+        if score > highScoreNumber{
+            highScoreNumber = score
+            defaults.set(highScoreNumber, forKey: "Saved")
         }
         
+        highScoreLabel.text = "BEST SCORE: \(highScoreNumber)"
+        
         gameOverView.addSubview(gameOverLabel)
+        gameOverView.addSubview(menuLabel)
+        gameOverView.addSubview(restartLabel)
         gameOverView.addSubview(finishScoreLabel)
         gameOverView.addSubview(highScoreLabel)
         gameOverView.addSubview(restartButton)
         gameOverView.addSubview(menuButton)
         gameOverLayouts()
-        }
+    }
     
     // MARK: - Actions
     func addRandom(){
@@ -291,45 +319,41 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             Top(75),
             Bottom(70)
         ]
-        menuButton <- [
-            Top(380),
-            Left(40),
-            //            Right(200),
-            //            Bottom(80)
-            Height(100),
-            Width(100)
-        ]
-        restartButton <- [
-            Top(380),
-            Right(40),
-            Height(100),
-            Width(100)
-        ]
         gameOverLabel <- [
-            Top(30),
-            Left(50)
+            Top(30).to(gameOverView),
+            Left(screenWidth / 8)
         ]
         finishScoreLabel <- [
-            Top(120),
-            Left(100),
-            Right(90)
-            
+            Top(screenWidth / 6.25).to(gameOverLabel),
+            Left(screenWidth / 4.2)
         ]
         highScoreLabel <- [
-            Top(10).to(finishScoreLabel),
-            Left(60),
-            Right(60)
+            Top(20).to(finishScoreLabel),
+            Left(screenWidth / 9)
         ]
-      
+        menuButton <- [
+            Top(screenWidth / 3.05).to(highScoreLabel),
+            Left(61),
+            Height(screenWidth / 9),
+            Width(screenWidth / 9)
+        ]
+        restartButton <- [
+            Top(screenWidth / 3.1).to(highScoreLabel),
+            Right(61),
+            Height(screenWidth / 11),
+            Width(screenWidth / 11)
+        ]
+        restartLabel <- [
+        Top(screenWidth / 15).to(restartButton),
+        Right(50)
+//        Width(screenHeight / 10),
+//        Height(screenHeight / 10)
+        ]
+        menuLabel <- [
+            Top(screenWidth / 23).to(menuButton),
+            Left(61)
+            //        Width(screenHeight / 10),
+            //        Height(screenHeight / 10)
+        ]
     }
-//    func pauseViewLayouts(){
-//    pauseView <- [
-//        Top(20),
-//        Right(30),
-//        Left(30),
-//        Bottom(20)
-//        ]
-//    
-//    
-//    }
 }
